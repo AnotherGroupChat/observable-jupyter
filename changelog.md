@@ -1,3 +1,8 @@
+## 0.1.15
+
+- Added Jupyter magics %%embed_observable
+- Added css/js injection hooks
+
 ## 0.1.14
 
 - Bump Observable runtime for @variable

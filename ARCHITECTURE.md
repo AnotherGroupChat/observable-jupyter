@@ -28,9 +28,13 @@ Because this notebook code is requested from observablehq.com each time the Jupy
 | | +iframe------------------------------+ | |      because this is a side
 | | | <link rel="style" href=.../>       | | |      effect of embed(), not
 | | | <script> iframe_bundle.js </script>| | |      the return value of embed()
+| | | <style>                            | | |
+| | | * Style reset for the frame        | | |
+| | | * Injected CSS                     | | |
+| | | </style>                           | | |
 | | | <div> embed targets this div </div>| | |
 | | | <script>                           | | |
-| | |  This script, using functionality  | | |
+| | | * This script, using functionality | | |
 | | |  from iframe_bundle.js, does these:| | |
 | | |  - loads jsonified embed(inputs=[])| | |
 | | |  - chooses cells embed(cells=[])   | | |
@@ -49,8 +53,9 @@ Because this notebook code is requested from observablehq.com each time the Jupy
 | | |       <-------------JavaScript module/script of dependency |
 | | |    request cdn.jsdelivr.net/npm/moment-------------->      |
 | | |       <-------------JavaScript module/script of dependency |
-| | |</script>                           | | |        |          |
-| | +------------------------------------+ | |        +----------+
+| | | * Injected JS                      | | |        |          |
+| | |</script>                           | | |        +----------+
+| | +------------------------------------+ | |
 | |    <a class="observable-link"          | |
 | |     <span class="observable-logo">     | |
 | |       Edit @author/title on Observable | |

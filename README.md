@@ -35,6 +35,32 @@ embed(
 )
 ~~~
 
+You can also run this as a magic where cells prefixed with `@` are views:
+~~~py
+%embed_observable @observablehq/visualize-a-data-frame-with-observable-in-jupyter -- vegaPetalsWidget @sepalLengthLimits @sepalWidthLimits
+~~~
+
+And injected JavaScript or CSS to tweak the frame for your use case:
+
+~~~py
+%%embed_observable @observablehq/visualize-a-data-frame-with-observable-in-jupyter +css -- vegaPetalsWidget @sepalLengthLimits @sepalWidthLimits
+/** This cell is now interpreted as CSS with the +css flag (your guess for +js). */
+body {
+  background-color:#000;
+}
+~~~
+
+or
+
+~~~py
+embed(
+    '@observablehq/visualize-a-data-frame-with-observable-in-jupyter,
+    cells=['vegaPetalsWidget', 'viewof sepalLengthLimits', 'viewof sepalWidthLimits'],
+    js_injection=js_string,
+    css_injection=css_string,
+)
+~~~
+
 Embedding specific cells with the cell keyword parameter of `embed([])` causes only these cells to be shown, but every cell still runs.
 
 This behavior is slightly different than the Observable embed default.

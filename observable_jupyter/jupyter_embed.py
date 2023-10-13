@@ -6,7 +6,7 @@ import random
 import html
 import html.entities as entities
 import pkg_resources
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 iframe_bundle_fname = pkg_resources.resource_filename(
     "observable_jupyter", "iframe_bundle.js"
@@ -36,7 +36,12 @@ except ImportError:
 
 
 def embed(
-    slug: str, cells: List[str] = None, inputs: Dict = None, display_logo=True
+    slug: str,
+    cells: List[str] = None,
+    inputs: Dict = None,
+    js_injection: Optional[str] = None,
+    css_injection: Optional[str] = None,
+    display_logo=True
 ) -> None:
     """Embeds a set of cells or an entire Observable notebook.
     """
@@ -57,6 +62,16 @@ def embed(
             if not isinstance(cell, str):
                 raise ValueError("Cell names should be strings.")
 
+    if js_injection is None:
+      js_injection = ""
+    if not isinstance(js_injection, str):
+        raise ValueError("Javascript injection should be a string.")
+
+    if css_injection is None:
+      css_injection = ""
+    if not isinstance(css_injection, str):
+        raise ValueError("CSS injection should be a string.")
+
     # Brackets in Python f-strings are escaped by using two brackets: { -> {{, } -> }}
     iframe_src = f"""<!DOCTYPE html>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@observablehq/inspector@3/dist/inspector.css">
@@ -64,6 +79,7 @@ def embed(
 body {{
   margin: 0;
 }}
+{css_injection}
 </style>
 <script>
 {iframe_bundle_src}
@@ -81,6 +97,7 @@ window.addEventListener('unload', () => {{
       window.main._runtime.dispose();
   }}
 }});
+{js_injection}
 </script>
 """
     link_back = (
