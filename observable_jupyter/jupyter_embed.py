@@ -90,6 +90,7 @@ const inputs = {jsonified_inputs};
 const slug = '{slug}';
 const into = document.getElementsByTagName('div')[0];
 const cells = {repr(cells) if cells else "undefined"}
+{js_injection}
 ObservableJupyterIframe.embed(slug, into, cells, inputs).then(m => {{window.main = m;}});
 ObservableJupyterIframe.monitor()
 window.addEventListener('unload', () => {{
@@ -97,7 +98,6 @@ window.addEventListener('unload', () => {{
       window.main._runtime.dispose();
   }}
 }});
-{js_injection}
 </script>
 """
     link_back = (
