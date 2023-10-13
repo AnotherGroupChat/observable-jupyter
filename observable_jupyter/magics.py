@@ -23,10 +23,11 @@ def embed_observable(line: str, payload: Optional[str]=None):
         if args.index('--') != 1:
             if payload is None:
                 raise Exception("Usage: %embed_observable notebook_name -- cell1 cell2 ...")
-            if args.index('+js') == 1:
-              payload_args = {"js_injection": payload}
-            elif args.index('+css') == 1:
-              payload_args = {"css_injection": payload}
+            if args[1] in ('+js', '+css'):
+              if args[1] == '+js':
+                payload_args = {"js_injection": payload}
+              elif args[1] == '+css':
+                payload_args = {"css_injection": payload}
             else:
                 raise Exception("Usage: %%embed_observable +js|+css notebook_name -- cell1 cell2 ...")
         cells = args[2:]
